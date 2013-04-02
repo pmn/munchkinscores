@@ -1,10 +1,18 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "5000"
+	}
+
 	http.Handle("/", http.FileServer(http.Dir("./")))
-	http.ListenAndServe(":8080", http.DefaultServeMux)
+	log.Println("Starting application on port " + port)
+	http.ListenAndServe(":"+port, http.DefaultServeMux)
 }
