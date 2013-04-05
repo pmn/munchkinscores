@@ -8,5 +8,10 @@
         user:{{ username }}<br />
         <a ng-href ng-click="newgame()" class="button">New</a>
     </div>
+    <div>
+        <ul>
+            <li ng-repeat="game in games"><a ng-href="#/g/{{ game.name }}">{{ game }}</a></li>
+        </ul>
+    </div>
     
 </div>
