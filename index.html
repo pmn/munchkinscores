@@ -1,85 +1,63 @@
-<html>
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> 
+<html class="no-js" ng-app="app" lang="en" > 
+<!--<![endif]-->
+
 <head>
-    <title>Munchkin scores</title>
-    <script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Munchkin!</title>
+
+  <link rel="stylesheet" href="css/normalize.css" />
+  <link rel="stylesheet" href="css/foundation.css" />
+
+  <script src="js/vendor/custom.modernizr.js"></script>
+  
+
 </head>
-<body>
-    <h1>Munchkin scores</h1>
-    <h2>cool!</h2>
-    <table id="scoreTable"></table>
-    <input type="text" id="nameInput" placeholder="Name">
-    <input type="text" id="scoreInput" placeholder="Score">
+<body ng-controller="HomeCtrl">
+	<div class="row">
+		<div class="large-12 columns">
+			<h2>Testing</h2>
+			<hr />
 
-    <script type='text/javascript'>
-        // Original code from https://www.firebase.com/tutorial/index.html#session/s90i28zp6ka
-        var munchkinRef = new Firebase('https://munchkinscores.firebaseio.com/');
-        var PLAYER_COUNT = 4;
-        // Keep a mapping of firebase locations to HTML elements, so we can move /remove items
-        var htmlForPath = {};
+            <a ng-click="login()" ng-href class="button">Log in</a>
+		</div>
+	</div>
 
-        // Helper function for scores
-        function handleScoreChanged(scoreSnapshot, prevScoreName) {
-            var newScoreRow = $("<tr />");
-            newScoreRow.append($("<td />").append($("<em/>").text(scoreSnapshot.val().name)));
-            newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
-
-            // store a reference to the row
-            htmlForPath[scoreSnapshot.name()] = newScoreRow;
-
-            // Insert the new score in the appropriate place in the table.
-            if (prevScoreName === null){ 
-                $("#scoreTable").append(newScoreRow);
-            } else {
-                var lowerScorewRow = htmlForPath[prevScoreName];
-                lowerScorewRow.before(newScoreRow);
-            }
-        }
-
-        // Helper function to handle a score object being removed
-        function handleScoreRemoved(scoreSnapshot){
-            var removedScoreRow = htmlForPath[scoreSnapshot.name()];
-            removedScoreRow.remove();
-
-            delete htmlForPath[scoreSnapshot.name()];
-        }
-
-        var scoreListView = munchkinRef.limit(PLAYER_COUNT);
-
-        scoreListView.on('child_added', function(newScoreSnapshot, prevScoreName){
-            handleScoreChanged(newScoreSnapshot, prevScoreName);
-        });
-
-        scoreListView.on('child_removed', function (oldScoreSnapshot) {
-            handleScoreRemoved(oldScoreSnapshot);
-        });
-
-        // add a callback to handle when a score cahnges or moves positions.
-        var changedCallback = function (scoreSnapshot, prevScoreName) {
-            handleScoreRemoved(scoreSnapshot);
-            handleScoreChanged(scoreSnapshot, prevScoreName);
-        };
-
-        scoreListView.on('child_moved', changedCallback);
-        scoreListView.on('child_changed', changedCallback);
-
-        $("#scoreInput").keypress(function (e) {
-            if (e.keyCode == 13) {
-                var newScore = Number($("#scoreInput").val());
-                var name = $("#nameInput").val();
-
-                $("#scoreInput").val("");
-
-                if (name.length === 0)
-                    return;
-
-                var userScoreRef = munchkinRef.child(name);
-
-                // use setWithPriority to put the name / score in firebase 
-                userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
-            }
-        })
-
-    </script>
+  <script>
+  document.write('<script src=' +
+  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+  '.js><\/script>')
+  </script>
+  
+  <script src="js/foundation.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src="https://cdn.firebase.com/v0/firebase-auth-client.js"></script>
+  <script src="js/vendor/angularFire.js"></script>
+  <script type='text/javascript' src='https://login.persona.org/include.js'></script>
+  <script src="js/site.js"></script>
+  <!--
+  <script src="js/foundation/foundation.js"></script>
+  <script src="js/foundation/foundation.alerts.js"></script>
+  <script src="js/foundation/foundation.clearing.js"></script>
+  <script src="js/foundation/foundation.cookie.js"></script>
+  <script src="js/foundation/foundation.dropdown.js"></script>
+  <script src="js/foundation/foundation.forms.js"></script>
+  <script src="js/foundation/foundation.joyride.js"></script>
+  <script src="js/foundation/foundation.magellan.js"></script>
+  <script src="js/foundation/foundation.orbit.js"></script>
+  <script src="js/foundation/foundation.placeholder.js"></script>
+  <script src="js/foundation/foundation.reveal.js"></script>
+  <script src="js/foundation/foundation.section.js"></script>
+  <script src="js/foundation/foundation.tooltips.js"></script>
+  <script src="js/foundation/foundation.topbar.js"></script>
+  -->
+  
+  <script>
+    $(document).foundation();
+  </script>
 </body>
 </html>
