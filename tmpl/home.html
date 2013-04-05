@@ -1,0 +1,12 @@
+<div ng-controller="HomeCtrl">
+    <h2>home</h2>
+    <div ng-hide="username.length > 0">
+        <a ng-href ng-click="login()" class="button">Auth</a>
+        <input type="text" ng-model="txtUsername"><a ng-href ng-click="setName()" class="button">Set name</a>
+    </div>
+    <div ng-show="username.length > 0">
+        user:{{ username }}<br />
+        <a ng-href ng-click="newgame()" class="button">New</a>
+    </div>
+    
+</div>

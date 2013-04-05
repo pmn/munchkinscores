@@ -14,15 +14,12 @@
 
   <script src="js/vendor/custom.modernizr.js"></script>
   
-
+  <base href="/#">
 </head>
-<body ng-controller="HomeCtrl">
+<body>
 	<div class="row">
 		<div class="large-12 columns">
-			<h2>Testing</h2>
-			<hr />
-
-            <a ng-click="login()" ng-href class="button">Log in</a>
+            <div ng-view id="contentSection"></div>
 		</div>
 	</div>
 
@@ -38,6 +35,7 @@
   <script src="https://cdn.firebase.com/v0/firebase-auth-client.js"></script>
   <script src="js/vendor/angularFire.js"></script>
   <script type='text/javascript' src='https://login.persona.org/include.js'></script>
+  <script src="js/words.js"></script>
   <script src="js/site.js"></script>
   <!--
   <script src="js/foundation/foundation.js"></script>
