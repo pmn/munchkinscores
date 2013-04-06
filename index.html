@@ -23,7 +23,7 @@
         // Helper function for scores
         function handleScoreChanged(scoreSnapshot, prevScoreName) {
             var newScoreRow = $("<tr />");
-            newScoreRow.append($("<td />").append($("<em/>").text(scoreSnapshot.val().name)));
+            newScoreRow.append($("<td />").append($("<b/>").text(scoreSnapshot.val().name)));
             newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
 
             // store a reference to the row
