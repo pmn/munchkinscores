@@ -18,10 +18,20 @@ function HomeCtrl($scope, $location, angularFire) {
         $scope.games.push({name: gameName, created: new Date() });
         $location.path("/g/" + gameName);
     };
+
+    $scope.setDisplayName = function() {
+        var user = munchkinRef.child('users/'+ $scope.userid);
+        user.child('displayname').set($scope.txtDisplayname);
+    };
 }
 
 function GameCtrl($rootScope, $scope, $route, $routeParams, angularFire){
     var url = firebaseUrl + $routeParams.name;
+    
+    $scope.joinGame = function() {
+        // Join the game
+        $scope.joined = true;
+    };
 }
 
 app.config(['$routeProvider', function ($routeProvider){
@@ -31,11 +41,21 @@ app.config(['$routeProvider', function ($routeProvider){
         otherwise({ redirectTo: '/' });
 }]);
 
-app.run(['$rootScope', '$location', function (scope, $location){
-    scope.authClient = new FirebaseAuthClient(munchkinRef, function(err, user) {
-      if (user) {
+app.run(['$rootScope', '$location', 'angularFire', function (scope, $location, angularFire){
+    scope.authClient = new FirebaseAuthClient(munchkinRef, function(err, result) {
+      if (result) {
         // Get the user's username from firebase. If it doesn't exist, allow the user to choose one
-        scope.setName(user.email);
+        scope.userid = result.id;
+        var user = munchkinRef.child('users/'+result.id);
+
+        if (user.child('displayname')) {
+            var displayname = munchkinRef.child('users/'+result.id + "/displayname");
+            displayname.once('value', function(snapshot) {
+                scope.displayname = snapshot.val();
+            });
+        }
+
+        scope.setName(result.email);
       }
     });
 
@@ -43,4 +63,15 @@ app.run(['$rootScope', '$location', function (scope, $location){
         // Set the user's name
         scope.username = username;
     };
+
+    if (scope.userid) {
+        var user = munchkinRef.child('users/' + scope.userid);
+        if (user.child('displayname')) {
+            var displayname = user.child('displayname');
+            displayname.once('value', function(snapshot){
+                scope.displayname = snapshot.val();
+                console.log('displayname stet')
+            });
+        };
+    }
 }]);

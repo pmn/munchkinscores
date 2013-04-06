@@ -1,4 +1,12 @@
 <div ng-controller="GameCtrl">
-    <h3>g</h3>
-    {{ username }}
+    {{ displayname }}
+    <div ng-show="displayname.length > 0">
+        <div ng-hide="joined">
+            <a ng-href ng-click="joinGame()" class="button">Join</a>
+        </div>
+        <div ng-show="joined">
+            <a ng-href ng-click="levelUp()" class="button round success">+</a>
+            <a ng-href ng-click="levelDown()" class="button round alert">-</a>
+        </div>
+    </div>
 </div>

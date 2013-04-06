@@ -5,12 +5,16 @@
         <input type="text" ng-model="txtUsername"><a ng-href ng-click="setName()" class="button">Set name</a>
     </div>
     <div ng-show="username.length > 0">
-        user:{{ username }}<br />
-        <a ng-href ng-click="newgame()" class="button">New</a>
+        <div ng-hide="displayname.length > 0" class="small-4 columns">
+            <input type="text" class="xx-small" ng-model="txtDisplayname">
+            <a ng-click="setDisplayName()">set displayname</a>
+        </div>
+        You are:{{ displayname }}<br />
+        <a ng-href ng-click="newgame()" class="button">New Game</a>
     </div>
     <div>
         <ul>
-            <li ng-repeat="game in games"><a ng-href="#/g/{{ game.name }}">{{ game }}</a></li>
+            <li ng-repeat="game in games"><a ng-href="#/g/{{ game.name }}">{{ game.name }}</a></li>
         </ul>
     </div>
     
